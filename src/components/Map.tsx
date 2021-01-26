@@ -29,6 +29,8 @@ type Props = BoxProps<Theme> & {
   interactive?: boolean
   onFeatureSelected?: (properties: GeoJsonProperties) => void
   showUserLocation?: boolean
+  scrollEnabled?: boolean
+  zoomEnabled?: boolean
 }
 const Map = ({
   onMapMoved,
