@@ -39,6 +39,7 @@ import {
   fetchHotspotWitnesses,
 } from '../../../store/hotspotDetails/hotspotDetailsSlice'
 import { useAppDispatch } from '../../../store/store'
+import HotspotSettingsProvider from '../settings/HotspotSettingsProvider'
 
 type HotspotDetailsRouteProp = RouteProp<
   HotspotStackParamList,
@@ -289,11 +290,13 @@ const HotspotDetails = () => {
         </BottomSheet>
       </Box>
 
-      <HotspotSettings
-        hotspot={hotspot}
-        visible={showSettings}
-        onClose={() => setShowSettings(false)}
-      />
+      <HotspotSettingsProvider>
+        <HotspotSettings
+          hotspot={hotspot}
+          visible={showSettings}
+          onClose={() => setShowSettings(false)}
+        />
+      </HotspotSettingsProvider>
     </SafeAreaBox>
   )
 }

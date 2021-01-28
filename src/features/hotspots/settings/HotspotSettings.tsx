@@ -27,6 +27,9 @@ import {
   getTransfer,
   Transfer,
 } from '../transfers/TransferRequests'
+import { useHotspotSettingsContext } from './HotspotSettingsProvider'
+import BackButton from '../../../components/BackButton'
+import Box from '../../../components/Box'
 
 type Props = {
   visible: boolean
@@ -43,6 +46,7 @@ const HotspotSettings = ({ visible, onClose, hotspot }: Props) => {
   const { m } = useSpacing()
   const slideUpAnimRef = useRef(new Animated.Value(1000))
   const { getState } = useBluetoothContext()
+  const { showBack, goBack } = useHotspotSettingsContext()
 
   useEffect(() => {
     Animated.timing(slideUpAnimRef.current, {
@@ -207,17 +211,16 @@ const HotspotSettings = ({ visible, onClose, hotspot }: Props) => {
         flexDirection="column"
         justifyContent="space-between"
       >
-        <TouchableOpacityBox
-          alignSelf="flex-end"
-          height={22}
-          flex={1}
-          padding="l"
-          width="100%"
-          alignItems="flex-end"
-          onPress={onClose}
+        <Box
+          flexDirection="row-reverse"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          <CloseModal color="white" />
-        </TouchableOpacityBox>
+          <TouchableOpacityBox padding="l" onPress={onClose}>
+            <CloseModal color="white" />
+          </TouchableOpacityBox>
+          {showBack && <BackButton alignSelf="center" onPress={goBack} />}
+        </Box>
         <AnimatedBox
           margin="ms"
           style={{ transform: [{ translateY: slideUpAnimRef.current }] }}
