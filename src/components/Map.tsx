@@ -8,6 +8,7 @@ import { BoxProps } from '@shopify/restyle'
 import Box from './Box'
 import CurrentLocationButton from './CurrentLocationButton'
 import { Theme } from '../theme/theme'
+import sleep from '../utils/sleep'
 
 const styleURL = 'mapbox://styles/petermain/ckjtsfkfj0nay19o3f9jhft6v'
 
@@ -74,8 +75,10 @@ const Map = ({
     })
   }
   const flyTo = useCallback(
-    (lat?: number, lng?: number, duration?: number) => {
+    async (lat?: number, lng?: number, duration?: number) => {
       if (!lat || !lng) return
+
+      await sleep(300) // this fixes a timing bug on Android where zoom level doesn't get set when flyTo is called to soon
       camera.current?.flyTo(
         [lng, lat - centerOffset],
         duration || animationDuration,
