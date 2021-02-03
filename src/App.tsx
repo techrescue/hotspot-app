@@ -27,7 +27,8 @@ import { fetchData } from './store/account/accountSlice'
 import BluetoothProvider from './providers/BluetoothProvider'
 import ConnectedHotspotProvider from './providers/ConnectedHotspotProvider'
 import * as Logger from './utils/logger'
-import { configChainVars, initFetchers } from './utils/appDataClient'
+import { configChainVars } from './utils/appDataClient'
+import { fetchBlockHeight } from './store/helium/heliumDataSlice'
 
 const App = () => {
   if (Platform.OS === 'android') {
@@ -36,6 +37,7 @@ const App = () => {
     }
     LogBox.ignoreLogs(['Setting a timer'])
   }
+  LogBox.ignoreLogs(['Calling getNode'])
 
   const dispatch = useAppDispatch()
 
@@ -50,6 +52,7 @@ const App = () => {
       isLocked,
       appStateStatus,
     },
+    heliumData: { blockHeight },
   } = useSelector((state: RootState) => state)
 
   useEffect(() => {
@@ -87,12 +90,6 @@ const App = () => {
   }, [isRestored, isBackedUp, dispatch])
 
   useEffect(() => {
-    if (isBackedUp) {
-      initFetchers()
-    }
-  }, [isBackedUp])
-
-  useEffect(() => {
     OneSignal.setAppId(Config.ONE_SIGNAL_APP_ID)
     MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN)
     Logger.init()
@@ -107,6 +104,17 @@ const App = () => {
   }, [handleChange])
 
   useAsync(configChainVars, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(fetchBlockHeight())
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(fetchData())
+  }, [blockHeight, dispatch])
 
   return (
     <ThemeProvider theme={theme}>
