@@ -1,10 +1,5 @@
-import React, { memo, ReactText, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Picker } from '@react-native-picker/picker'
-import { Modal } from 'react-native'
-import Box from './Box'
-import TouchableOpacityBox from './TouchableOpacityBox'
-import Text from './Text'
+import React, { memo, ReactText, useEffect, useRef, useState } from 'react'
+import ReactNativePickerModule from 'react-native-picker-module'
 import { useColors } from '../theme/themeHooks'
 
 type Props = {
@@ -13,71 +8,51 @@ type Props = {
   onValueChanged: (itemValue: ReactText, itemIndex: number) => void
   visible: boolean
   handleClose: () => void
+  title?: string
 }
 
 const ModalPicker = ({
-  data,
+  data: propData,
   selectedValue,
   onValueChanged,
   visible,
   handleClose,
+  title,
 }: Props) => {
-  const { grayLight } = useColors()
-  const { t } = useTranslation()
-  const [selection, setSelection] = useState<{
-    itemIndex: number | undefined
-    itemValue: ReactText
-  }>({ itemValue: selectedValue, itemIndex: undefined })
+  const { redMain } = useColors()
+  const pickerRef = useRef<ReactNativePickerModule>(null)
+  const [data, setData] = useState(propData)
+
+  useEffect(() => {
+    const selectedItemIndex = data.findIndex(
+      ({ value }) => value === selectedValue,
+    )
+    setData([
+      ...data.slice(0, selectedItemIndex),
+      ...data.slice(selectedItemIndex + 1),
+    ])
+  }, [data, selectedValue])
+
+  useEffect(() => {
+    if (!visible) return
+
+    pickerRef.current?.show()
+  }, [visible])
   return (
-    <Modal
-      visible={visible}
-      onRequestClose={handleClose}
-      animationType="slide"
-      transparent
-    >
-      <Box flex={1} justifyContent="flex-end">
-        <Box
-          top={0}
-          left={0}
-          bottom={0}
-          right={0}
-          position="absolute"
-          onTouchStart={handleClose}
-        />
-        <Box backgroundColor="grayBox">
-          <TouchableOpacityBox alignSelf="flex-end">
-            <Text
-              color="purpleMain"
-              variant="body1Medium"
-              paddingVertical="ms"
-              paddingHorizontal="m"
-              onPress={() => {
-                if (selection.itemIndex !== undefined) {
-                  onValueChanged(selection.itemValue, selection.itemIndex)
-                }
-                handleClose()
-              }}
-            >
-              {t('generic.done')}
-            </Text>
-          </TouchableOpacityBox>
-          <Picker
-            selectedValue={selection.itemValue}
-            style={{
-              width: '100%',
-              backgroundColor: grayLight,
-            }}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelection({ itemValue, itemIndex })
-            }
-          >
-            {data.map(({ label, value }) => (
-              <Picker.Item key={value} label={label} value={value} />
-            ))}
-          </Picker>
-        </Box>
-      </Box>
-    </Modal>
+    <ReactNativePickerModule
+      pickerRef={pickerRef}
+      value={selectedValue}
+      items={data.map(({ label }) => label)}
+      title={title}
+      titleStyle={{ height: title ? -16 : undefined }}
+      cancelButtonTextStyle={{ color: redMain }}
+      onCancel={handleClose}
+      onValueChange={(value) => {
+        const selectedIdx = data.findIndex(({ label }) => label === value)
+        onValueChanged(data[selectedIdx].value, selectedIdx)
+        handleClose()
+      }}
+    />
   )
 }
 

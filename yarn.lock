@@ -9784,6 +9784,13 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
+react-native-animatable@1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.3.tgz#a13a4af8258e3bb14d0a9d839917e9bb9274ec8a"
+  integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-ble-plx@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/react-native-ble-plx/-/react-native-ble-plx-2.0.2.tgz#0912c50d4d807ed279a2a1043362c96318518154"
@@ -9833,6 +9840,14 @@ react-native-localize@^1.4.3:
   resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-1.4.3.tgz#6fde2fb1e73a7205910419a680cb4734187d556f"
   integrity sha512-n3pi89LBeSzB825CBagyaYRtBS93LdvNz3sI386iXwLSg1ONjEGR1Ez36JBuxZalZgORjrKzV2Pun6MO7iwD6w==
 
+react-native-modal@^11.6.1:
+  version "11.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.6.1.tgz#6162a39731860fb3b6e8304059f72dc0a961f9fd"
+  integrity sha512-Xsd79nuBvbLOYwpRuur4btwJFQ3WkV9zp5LbAREidUtjl/Ajlp4QbNBx888FOPjo+EpOO3+U0riCRqs1dkdIzQ==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-animatable "1.3.3"
+
 react-native-navigation-bar-color@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.1.tgz#ee2be25cc37105f7da355717b0a9a32c9c059ae6"
@@ -9844,6 +9859,11 @@ react-native-onesignal@^4.0.0-beta.4:
   integrity sha512-QdBKsYAWn52g7sOG8NsKAHVgnF7PZ6Kk9fB98f/0nyJElvjff/mUWGE4waKUuwM2uh4c/EOX4n3P7Q/Wmz5Bvg==
   dependencies:
     invariant "^2.2.2"
+
+react-native-picker-module@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-picker-module/-/react-native-picker-module-2.0.4.tgz#4a08d8fd2cf18a4ab6a4d55152aa5789b5d898aa"
+  integrity sha512-oWvWNach+ajFu9E5AcqZ6W6PHtb3L0vjKuCelk6IdZTqbKP7wNqoSJWhAegza4kvf91qfmwVs8ihfQE4AS9CSw==
 
 react-native-picker-select@^8.0.3:
   version "8.0.4"
